@@ -1,17 +1,20 @@
 const insertSaleService = require('../services/insertSaleService');
-const arrValidation = require('./validation/validationArr');
+const validationArr = require('./validation/validationArr');
 
 const insertSale = async (req, res) => {
   const arrSales = req.body;
-  const productValidation = await arrValidation(arrSales, 'productId');
-  const quantityValidation = await arrValidation(arrSales, 'quantity');
-  if (!productValidation) {
-    return res.status(400).json({ message: '"productId" is required' });
+  const validation = await validationArr.arrValidation(arrSales, ['productId', 'quantity']);
+  const numberQuantity = await validationArr.numberValidation(arrSales);
+  if (validation.type === 'error') {
+    return res.status(400).json(validation.message);
   }
-  if (!quantityValidation) {
-    return res.status(400).json({ message: '"quantity" is required' });
+  if (numberQuantity.type === 'error') {
+    return res.status(422).json(numberQuantity.message);
   }
   const result = await insertSaleService.insertSale(arrSales);
+  if (result.message) {
+    return res.status(404).json(result);
+  }
   return res.status(201).json(result);
 };
 

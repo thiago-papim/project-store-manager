@@ -18,4 +18,5 @@ const insertSale = async (arrSales) => {
 
 module.exports = {
   insertSale,
+  createSale,
 };

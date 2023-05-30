@@ -10,7 +10,7 @@ const salesIdOne = require('../../mocks/salesIdOne');
 
 describe('Testando busca de produtos', function () {
   it('Testando getAll', async function () {
-    sinon.stub(salesListService, 'getAll').resolves(allSales);
+    sinon.stub(salesListModel, 'getAll').resolves(allSales);
     const result = await salesListService.getAll();
     expect(result).to.be.deep.equal(allSales);
   });

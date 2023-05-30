@@ -53,11 +53,15 @@ describe('Testando create', function () {
       .calledWith({ message: '"name" is required' });
   });
 
-  // it('Testando getById com id existente', async function () {
-  //   req.params = { id: 1 };
-  //   sinon.stub(productListService, 'getById').resolves({ type: '', message: allProducts[0] });
-  //   await productListController.getById(req, res);
-  //   expect(res.status).to.be.calledWith(200);
-  //   expect(res.json).to.be.calledWith(allProducts[0]);
-  // });
+  it('Testando create com nome correto', async function () {
+    req.body = { name: 'Teste' };
+    sinon.stub(createProductService, 'create').resolves({
+      type: '',
+      message: [[4], 0],
+    });
+    await createProductController.create(req, res);
+    expect(res.status).to.be.calledWith(201);
+    expect(res.json).to.be
+      .calledWith(4);
+  });
 });
