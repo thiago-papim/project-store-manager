@@ -5,6 +5,8 @@ const createProductController = require('./controllers/createProductController')
 const updateProductsController = require('./controllers/updateProductController');
 const deleteProductController = require('./controllers/deleteProductController');
 const insertSaleController = require('./controllers/insertSaleController');
+const deleteSaleController = require('./controllers/deleteSaleController');
+const updateSaleController = require('./controllers/updateSaleController');
 
 const app = express();
 
@@ -29,6 +31,10 @@ app.put('/products/:id', updateProductsController.update);
 
 app.delete('/products/:id', deleteProductController.deleteProduct);
 
+app.delete('/sales/:id', deleteSaleController.deleteProduct);
+
 app.post('/sales', insertSaleController.insertSale);
+
+app.put('/sales/:saleId/product/:productId/quantity', updateSaleController.updateSale);
 
 module.exports = app;

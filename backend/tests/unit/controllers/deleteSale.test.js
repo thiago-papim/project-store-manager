@@ -6,8 +6,8 @@ chai.use(sinonChai);
 
 const { expect } = chai;
 
-const deleteProductService = require('../../../src/services/deleteProductService');
-const deleteProductController = require('../../../src/controllers/deleteProductController');
+const deleteSaleService = require('../../../src/services/deleteSaleService');
+const deleteSaleController = require('../../../src/controllers/deleteSaleController');
 
 describe('Testando deleteProduct', function () {
   const req = {};
@@ -25,20 +25,20 @@ describe('Testando deleteProduct', function () {
   it('Testando id correto', async function () {
     req.params = { id: 1 };
     res.end = sinon.stub();
-    sinon.stub(deleteProductService, 'deleteProduct').resolves(undefined);
-    await deleteProductController.deleteProduct(req, res);
+    sinon.stub(deleteSaleService, 'deleteSale').resolves(undefined);
+    await deleteSaleController.deleteProduct(req, res);
     expect(res.status).to.be.calledWith(204);
     expect(res.end).to.be.calledWith();
   });
 
   it('Testando id incorreto', async function () {
     req.params = { id: 99999 };
-    sinon.stub(deleteProductService, 'deleteProduct').resolves({
+    sinon.stub(deleteSaleService, 'deleteSale').resolves({
       type: 'error not found',
-      message: { message: 'Product not found' },
+      message: { message: 'Sale not found' },
     });
-    await deleteProductController.deleteProduct(req, res);
+    await deleteSaleController.deleteProduct(req, res);
     expect(res.status).to.be.calledWith(404);
-    expect(res.json).to.be.calledWith({ message: 'Product not found' });
+    expect(res.json).to.be.calledWith({ message: 'Sale not found' });
   });
 });
