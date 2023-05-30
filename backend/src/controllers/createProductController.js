@@ -1,14 +1,5 @@
 const createProductService = require('../services/createProductServices');
 
-// const create = async (req, res) => {
-//   const { name } = req.body;
-//   if (!name) {
-//     return res.status(404).json({ message: '"name" is required' });
-//   }
-//   const [[result]] = await createProductService.create(name);
-//   result.name = name;
-//   res.status(201).json(result);
-// };
 const create = async (req, res) => {
   const { name } = req.body;
   if (!name) {

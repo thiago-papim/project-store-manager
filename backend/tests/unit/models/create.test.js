@@ -11,8 +11,8 @@ describe('Testando criação de produtos', function () {
     sinon.restore();
   });
   it('Testando create', async function () {
-    sinon.stub(connection, 'execute').resolves({ id: 4 });
-    const result = await createProductModel.create('Thiago');
-    expect(result).to.be.deep.equal({ id: 4 });
+    sinon.stub(connection, 'execute').resolves(4);
+    const result = await createProductModel.create('Produto Teste');
+    expect(result).to.be.deep.equal(4);
   });
 });
