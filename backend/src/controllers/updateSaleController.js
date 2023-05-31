@@ -1,23 +1,23 @@
-// const updateProductService = require('../services/updateProductService');
+const updateSaleService = require('../services/updateSaleService');
 
 const updateSale = async (req, res) => {
   const { saleId, productId } = req.params;
   const { quantity } = req.body;
-  // if (!name) {
-  //   return res.status(400).json({ message: '"name" is required' });
-  // }
-  // const result = await updateProductService.update(Number(id), name);
-  // if (result.type === 'error length') {
-  //   return res.status(422).json(result.message);
-  // }
-  // if (result.type === 'error not found') {
-  //   return res.status(404).json(result.message);
-  // }
-  // res.status(200).json(result);
-  console.log(saleId, 'sale');
-  console.log(productId, 'product');
-  console.log(quantity, 'quantity');
-  res.status(200).json({ saleId, productId, quantity });
+  const validationQuantity = Object.keys(req.body).some((e) => e === 'quantity');
+  if (!validationQuantity) {
+    return res.status(400).json({ message: '"quantity" is required' });
+  }
+  const numberQuantity = Object.values(req.body)
+    .some((e) => typeof e === 'number' && e > 0);
+  if (!numberQuantity) {
+    return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+  }
+  const result = await updateSaleService.updateSale(quantity, Number(saleId), Number(productId));
+  if (result[0].type === 'Error') {
+    return res.status(404).json(result[0].message);
+  }
+  const date = result[1];
+  res.status(200).json({ saleId: Number(saleId), productId: Number(productId), quantity, date });
 };
 
 module.exports = {

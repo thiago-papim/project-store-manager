@@ -32,7 +32,7 @@ describe('Testando insert', function () {
       .calledWith(mocks.objInsert);
   });
 
-  it('Testando sem a chave productId ou quantity', async function () {
+  it('Testando sem a chave productId', async function () {
     req.body = [
       {
         producId: 1,
@@ -44,6 +44,32 @@ describe('Testando insert', function () {
     expect(res.status).to.be.calledWith(400);
     expect(res.json).to.be
       .calledWith({ message: '"productId" is required' });
+  });
+  it('Testando sem a chave quantity', async function () {
+    req.body = [
+      {
+        productId: 1,
+        quantiy: 1,
+      },
+    ];
+    sinon.stub(insertSaleService, 'insertSale').resolves(undefined);
+    await insertSaleController.insertSale(req, res);
+    expect(res.status).to.be.calledWith(400);
+    expect(res.json).to.be
+      .calledWith({ message: '"quantity" is required' });
+  });
+  it('Testando produto não existente', async function () {
+    req.body = [
+      {
+        productId: 10,
+        quantity: 1,
+      },
+    ];
+    sinon.stub(insertSaleService, 'insertSale').resolves({ message: 'Product not found' });
+    await insertSaleController.insertSale(req, res);
+    expect(res.status).to.be.calledWith(404);
+    expect(res.json).to.be
+      .calledWith({ message: 'Product not found' });
   });
   it('Testando com valor invalido', async function () {
     req.body = [

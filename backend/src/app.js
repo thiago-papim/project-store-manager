@@ -7,6 +7,7 @@ const deleteProductController = require('./controllers/deleteProductController')
 const insertSaleController = require('./controllers/insertSaleController');
 const deleteSaleController = require('./controllers/deleteSaleController');
 const updateSaleController = require('./controllers/updateSaleController');
+const getProductNameController = require('./controllers/getProductNameController');
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 app.get('/', (_request, response) => {
   response.json({ status: 'Store Manager UP!' });
 });
+
+app.get('/products/search', getProductNameController.getProductName);
 
 app.get('/products', productListController.getAll);
 
@@ -35,6 +38,6 @@ app.delete('/sales/:id', deleteSaleController.deleteProduct);
 
 app.post('/sales', insertSaleController.insertSale);
 
-app.put('/sales/:saleId/product/:productId/quantity', updateSaleController.updateSale);
+app.put('/sales/:saleId/products/:productId/quantity', updateSaleController.updateSale);
 
 module.exports = app;

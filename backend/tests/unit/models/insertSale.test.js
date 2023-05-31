@@ -23,6 +23,6 @@
 //         quantity: 15,
 //       },
 //     ]);
-//     // expect(result).to.be.deep.equal(4);
+//     expect(result).to.be.deep.equal(4);
 //   });
 // });
